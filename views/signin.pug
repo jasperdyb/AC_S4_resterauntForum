@@ -1,0 +1,19 @@
+extends ./layouts/main.pug
+
+
+block body
+  form.form-signin(action='/signin', method='POST', style='width: 100%;')
+    .text-center.mb-4
+      h1.h3.mb-3.font-weight-normal Sign In
+    .form-label-group
+      label(for='inputEmail') Email
+      input.form-control(type='text', name='email', placeholder='Email', required='', autofocus='')
+    .form-label-group
+      label(for='inputPassword') Password
+      input.form-control(type='password', name='password', placeholder='Password', required='')
+    br
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Submit
+    .text-center.mb-4
+      p
+        a(href='/signup') Sign Up
+    p.mt-5.mb-3.text-muted.text-center © 2017-2018
