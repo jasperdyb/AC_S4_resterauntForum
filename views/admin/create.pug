@@ -1,0 +1,26 @@
+extends ../layouts/main.pug
+
+block body 
+  
+  if restaurant 
+    -var direct = '/admin/restaurants/'+restaurant.id+'?_method=PUT'
+  else
+    -var direct = '/admin/restaurants'
+    
+  form(action=direct, method='POST')
+    .form-group
+      label(for='name') Name
+      input#name.form-control(type='text', name='name',value=restaurant ? restaurant.name : null , placeholder='Enter name')
+    .form-group
+      label(for='tel') Tel
+      input#tel.form-control(type='text', name='tel',value=restaurant ? restaurant.tel : null, placeholder='Enter tel')
+    .form-group
+      label(for='address') Address
+      input#address.form-control(type='text', name='address',value=restaurant ? restaurant.address : null, placeholder='Enter address')
+    .form-group
+      label(for='opening_hours') Opening Hours
+      input#opening_hours.form-control(type='time', name='opening_hours',value=restaurant ? restaurant.opening_hours : null, placeholder='Enter opening_hours')
+    .form-group
+      label(for='description') Description
+      textarea#description.form-control(name='description', rows='3') #{restaurant ? restaurant.description : null}
+    button.btn.btn-primary(type='submit') Submit

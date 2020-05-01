@@ -6,12 +6,14 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 
 
 //middleware
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
