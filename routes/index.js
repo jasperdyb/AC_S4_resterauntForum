@@ -38,6 +38,9 @@ module.exports = (app, passport) => {
 
 
 
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+
   //User routes
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

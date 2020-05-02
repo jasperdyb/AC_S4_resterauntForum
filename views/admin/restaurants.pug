@@ -3,6 +3,12 @@ extends ../layouts/main.pug
 
 block body
   h1 餐廳後台
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link.active(href='#') Restaurants
+    li.nav-item
+      a.nav-link(href='/admin/users') Users
+  br
   a(href='/admin/restaurants/create')
     button.btn.btn-primary(type='button') New Restaurant
   br

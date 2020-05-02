@@ -1,5 +1,6 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
+const User = db.User
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '846dfa3a509d3e7'
@@ -117,6 +118,27 @@ const adminController = {
         restaurant.destroy()
           .then((restaurant) => {
             res.redirect('/admin/restaurants')
+          })
+      })
+  },
+
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true }).then(users => {
+      console.log("ger rendered!")
+      return res.render('admin/users', { users: users, currentUserEmail: req.user.email })
+    })
+  },
+
+  putUsers: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        user.update({
+          isAdmin: !user.isAdmin
+        })
+          .then((user) => {
+            console.log("here!")
+            req.flash('success_messages', 'Administration updated!')
+            res.send() //respond success to jquery.put()
           })
       })
   }
