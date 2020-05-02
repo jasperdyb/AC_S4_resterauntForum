@@ -25,11 +25,11 @@
     "passport-local": "^1.0.0",
     "pg": "^7.12.1",
     "pug": "^2.0.4",
-    "sequelize": "^5.21.7"
+    "sequelize": "^5.21.7",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
     "heroku-cli": "^7.0.9",
-    "nodemon": "^2.0.3",
-    "sequelize-cli": "^5.5.1"
+    "nodemon": "^2.0.3"
   }
 }
