@@ -21,7 +21,6 @@ const adminController = {
 
     const { file } = req
     if (file) {
-      console.log(req.file)
       fs.readFile(file.path, (err, data) => {
         if (err) console.log('Error: ', err)
         fs.writeFile(`upload/${file.originalname}`, data, () => {
