@@ -7,7 +7,7 @@ block body
   else
     -var direct = '/admin/restaurants'
     
-  form(action=direct, method='POST')
+  form(action=direct, method='POST' , enctype="multipart/form-data")
     .form-group
       label(for='name') Name
       input#name.form-control(type='text', name='name',value=restaurant ? restaurant.name : null , placeholder='Enter name')
@@ -23,4 +23,7 @@ block body
     .form-group
       label(for='description') Description
       textarea#description.form-control(name='description', rows='3') #{restaurant ? restaurant.description : null}
+    .form-group
+      label(for='image') Image
+      input#image.form-control-file(type='file', name='image')
     button.btn.btn-primary(type='submit') Submit
