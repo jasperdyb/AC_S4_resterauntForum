@@ -3,11 +3,14 @@ const Restaurant = db.Restaurant
 const User = db.User
 const fs = require('fs')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = '846dfa3a509d3e7'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({ raw: true }).then(restaurants => {
+    return Restaurant.findAll({
+      order: [['id', 'ASC']],
+      raw: true
+    }).then(restaurants => {
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
@@ -123,7 +126,10 @@ const adminController = {
   },
 
   getUsers: (req, res) => {
-    return User.findAll({ raw: true }).then(users => {
+    return User.findAll({
+      order: [['id', 'ASC']],
+      raw: true
+    }).then(users => {
       console.log("ger rendered!")
       return res.render('admin/users', { users: users, currentUserEmail: req.user.email })
     })
