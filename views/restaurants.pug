@@ -28,3 +28,18 @@ block body
             p.card-text #{restaurant.description}
   br
   br
+  nav(aria-label='Page navigation example')
+  ul.pagination
+    li.page-item
+      a.page-link(href=`/restaurants?page=${prev}&categoryId=${categoryId}`, aria-label='Previous')
+        span(aria-hidden='true') «
+    each page in totalPage
+      if currentPage == page
+        li.page-item.active
+          a.page-link(href='#') #{page}
+      else
+        li.page-item
+          a.page-link(href=`/restaurants?page=${page}&categoryId=${categoryId}`) #{page}
+    a.page-link(href=`/restaurants?page=${next}&categoryId=${categoryId}`, aria-label='Next')
+      span(aria-hidden='true') »
+
