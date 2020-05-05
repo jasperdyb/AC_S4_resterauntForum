@@ -1,0 +1,30 @@
+extends ./backstage.pug
+
+block table
+  .d-flex.align-items-center.form-inline
+    if category
+      form(action=`/admin/categories/${category.id}?_method=PUT`, method='POST')
+        input.form-control(type='text', placeholder='name', name='name', value=category.name)
+        button.btn.btn-primary.mx-2(type='submit') Update
+        a(href='/admin/categories') or Create New
+    else
+      form(action='/admin/categories', method='POST')
+        input.form-control(type='text', placeholder='name', name='name')
+        button.btn.btn-primary.mx-2(type='submit') Submit
+  table.table
+    thead.thead-dark
+      tr
+        th(scope='col') #
+        th(scope='col') Category Name
+        th(scope='col') #
+    tbody
+      each category in categories
+        tr
+          th(scope='row') #{category.id}
+          td #{category.name}
+          td
+            button.btn.btn-link(type='button')
+              a(href=`/admin/categories/${category.id}`)
+                | Edit
+            form(action=`/admin/categories/${category.id}?_method=DELETE`, method='POST', style='display: inline;')
+              button.btn.btn-link(type='submit') Delete

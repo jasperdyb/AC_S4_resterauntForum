@@ -1,14 +1,6 @@
-extends ../layouts/main.pug
+extends ./backstage.pug
 
-
-block body
-  h1 餐廳後台
-  ul.nav.nav-tabs
-    li.nav-item
-      a.nav-link.active(href='#') Restaurants
-    li.nav-item
-      a.nav-link(href='/admin/users') Users
-  br
+block table
   a(href='/admin/restaurants/create')
     button.btn.btn-primary(type='button') New Restaurant
   br
@@ -25,7 +17,11 @@ block body
         tr
           th(scope='row') #{restaurant.id}
           td #{restaurant.name}
-          td #{restaurant.Category.name}
+          td
+            if restaurant.Category.name
+              |#{restaurant.Category.name}
+            else
+              |(未分類)
           td
             button.btn.btn-link(type='button')
               a(href='/admin/restaurants/'+restaurant.id)

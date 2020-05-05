@@ -1,14 +1,6 @@
-extends ../layouts/main.pug
+extends ./backstage.pug
 
-
-block body
-  h1 使用者後台
-  ul.nav.nav-tabs
-    li.nav-item
-      a.nav-link(href='/admin/restaurants') Restaurants
-    li.nav-item
-      a.nav-link.active(href='#') Users
-  br
+block table
   table.table
     thead.thead-dark
       tr
