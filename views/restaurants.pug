@@ -2,4 +2,16 @@ extends ./layouts/main.pug
 
 
 block body
-  div Restaurants
+  .row
+    each restaurant in restaurants
+      .col-md-4
+        .card.mb-4.shadow-sm
+          img.card-img-top(src=restaurant.image, alt='Card image cap', width='286px', height='180px')
+          .card-body
+            p.card-text
+              a(href=`/restaurants/${restaurant.id}`)
+                | #{restaurant.name}
+            span.badge.badge-secondary #{restaurant.categoryName}
+            p.card-text #{restaurant.description}
+  br
+  br
