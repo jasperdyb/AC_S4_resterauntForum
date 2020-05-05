@@ -1,6 +1,7 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const User = db.User
+const Category = db.Category
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -9,14 +10,24 @@ const adminController = {
   getRestaurants: (req, res) => {
     return Restaurant.findAll({
       order: [['id', 'ASC']],
-      raw: true
+      raw: true,
+      nest: true,
+      include: [{ model: Category, attributes: ['name'] }]
     }).then(restaurants => {
+      console.log(restaurants[0])
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
 
   createRestaurant: (req, res) => {
-    return res.render('admin/create')
+    Category.findAll({
+      raw: true,
+      nest: true
+    }).then(categories => {
+      return res.render('admin/create', {
+        categories: categories
+      })
+    })
   },
 
   postRestaurant: (req, res) => {
@@ -35,6 +46,7 @@ const adminController = {
           address: req.body.address,
           opening_hours: req.body.opening_hours,
           description: req.body.description,
+          CategoryId: req.body.categoryId,
           image: file ? img.data.link : null,
         }).then((restaurant) => {
           req.flash('success_messages', 'restaurant was successfully created')
@@ -48,7 +60,8 @@ const adminController = {
         tel: req.body.tel,
         address: req.body.address,
         opening_hours: req.body.opening_hours,
-        description: req.body.description
+        description: req.body.description,
+        CategoryId: req.body.categoryId
       })
         .then((restaurant) => {
           req.flash('success_messages', 'restaurant was successfully created')
@@ -59,14 +72,28 @@ const adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
+    return Restaurant.findByPk(req.params.id, {
+      raw: true,
+      nest: true,
+      include: [{ model: Category, attributes: ['name'] }]
+    }).then(restaurant => {
       return res.render('admin/restaurant', { restaurant: restaurant })
     })
   },
 
   editRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
-      return res.render('admin/create', { restaurant: restaurant })
+    Category.findAll({
+      raw: true,
+      nest: true
+    }).then(categories => {
+      return Restaurant.findByPk(req.params.id, {
+        raw: true,
+        nest: true,
+        include: [{ model: Category, attributes: ['name'] }]
+      }).then(restaurant => {
+        console.log(restaurant)
+        return res.render('admin/create', { restaurant: restaurant, categories: categories })
+      })
     })
   },
 
@@ -88,6 +115,7 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
+              CategoryId: req.body.categoryId,
               image: file ? img.data.link : restaurant.image,
             })
               .then((restaurant) => {
@@ -105,7 +133,8 @@ const adminController = {
             tel: req.body.tel,
             address: req.body.address,
             opening_hours: req.body.opening_hours,
-            description: req.body.description
+            description: req.body.description,
+            CategoryId: req.body.categoryId
           })
             .then((restaurant) => {
               req.flash('success_messages', 'restaurant was successfully to update')

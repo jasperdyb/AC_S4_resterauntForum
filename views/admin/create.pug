@@ -12,6 +12,14 @@ block body
       label(for='name') Name
       input#name.form-control(type='text', name='name',value=restaurant ? restaurant.name : null , placeholder='Enter name')
     .form-group
+      label(for='categoryId') Category
+      select#categoryId.form-control(name='categoryId')
+        each category in  categories
+          if restaurant && restaurant.CategoryId == category.id
+            option(value=category.id selected ) #{category.name}
+          else
+            option(value=category.id) #{category.name}
+    .form-group
       label(for='tel') Tel
       input#tel.form-control(type='text', name='tel',value=restaurant ? restaurant.tel : null, placeholder='Enter tel')
     .form-group
