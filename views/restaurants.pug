@@ -2,6 +2,19 @@ extends ./layouts/main.pug
 
 
 block body
+  ul.nav.nav-pills
+    li.nav-item
+      if categoryId == ""
+        a.nav-link.active(href='?categoryId=') 全部
+      else
+        a.nav-link(href='?categoryId=') 全部
+    each category in categories
+      li.nav-item
+        if category.id == categoryId
+          a.nav-link.active(href=`?categoryId=${category.id}` ) #{category.name}
+        else
+          a.nav-link(href=`?categoryId=${category.id}`) #{category.name}
+  br
   .row
     each restaurant in restaurants
       .col-md-4
