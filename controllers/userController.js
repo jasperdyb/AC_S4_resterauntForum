@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const fs = require('fs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   signUpPage: (req, res) => {
@@ -45,7 +48,72 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+
+  getUser: (req, res) => {
+    return User.findByPk(req.params.id, {
+      raw: true,
+      nest: true
+    }).then(user => {
+      return res.render('userProfile', { userData: user }) //make difference with res.locals.user
+    })
+  },
+
+  editUser: (req, res) => {
+    //prevent edit from other users
+    if (req.params.id !== String(res.locals.user.id)) {
+      return res.redirect(`/users/${res.locals.user.id}`)
+    }
+
+    return User.findByPk(req.params.id, {
+      raw: true,
+      nest: true
+    }).then(user => {
+      return res.render('userEdit', { userData: user }) //make difference with req.locals.user
+    })
+  },
+
+  putUser: (req, res) => {
+    //prevent edit from other users
+    if (req.params.id !== String(res.locals.user.id)) {
+      return res.redirect(`/users/${res.locals.user.id}`)
+    }
+
+    if (!req.body.name) {
+      req.body.name = res.locals.user.name
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              image: file ? img.data.link : user.image,
+            })
+              .then((user) => {
+                req.flash('success_messages', 'user was successfully to update')
+                res.redirect(`/users/${user.id}`)
+              })
+          })
+      })
+    }
+    else {
+      return User.findByPk(req.params.id)
+        .then((user) => {
+          user.update({
+            name: req.body.name
+          })
+            .then((user) => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect(`/users/${user.id}`)
+            })
+        })
+    }
   }
+
 }
 
 module.exports = userController

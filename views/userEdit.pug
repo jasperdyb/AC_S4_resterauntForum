@@ -1,0 +1,11 @@
+extends ./layouts/main.pug
+
+block body 
+  form(action=`/users/${userData.id}?_method=PUT`, method='POST' , enctype="multipart/form-data")
+    .form-group
+      label(for='name') Name
+      input#name.form-control(type='text', name='name', placeholder=userData.name)
+    .form-group
+      label(for='image') Image
+      input#image.form-control-file(type='file', name='image')
+    button.btn.btn-primary(type='submit') Submit

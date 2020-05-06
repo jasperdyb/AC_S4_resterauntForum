@@ -15,7 +15,6 @@ const adminController = {
       nest: true,
       include: [{ model: Category, attributes: ['name'] }]
     }).then(restaurants => {
-      console.log(restaurants[0])
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
@@ -92,7 +91,6 @@ const adminController = {
         nest: true,
         include: [{ model: Category, attributes: ['name'] }]
       }).then(restaurant => {
-        console.log(restaurant)
         return res.render('admin/create', { restaurant: restaurant, categories: categories })
       })
     })
@@ -160,7 +158,6 @@ const adminController = {
       order: [['id', 'ASC']],
       raw: true
     }).then(users => {
-      console.log("ger rendered!")
       return res.render('admin/users', { users: users, currentUserEmail: req.user.email })
     })
   },
@@ -172,7 +169,6 @@ const adminController = {
           isAdmin: !user.isAdmin
         })
           .then((user) => {
-            console.log("here!")
             req.flash('success_messages', 'Administration updated!')
             res.send() //respond success to jquery.put()
           })
