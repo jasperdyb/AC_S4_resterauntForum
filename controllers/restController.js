@@ -1,6 +1,8 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const Comment = db.Comment
+const User = db.User
 const pageLimit = 12
 
 const restController = {
@@ -57,13 +59,16 @@ const restController = {
 
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, {
-      raw: true,
-      nest: true,
-      include: Category
+      // raw: true,   //raw didn't work with including hasMany models,it'll only shows the first query
+      // nest: true,
+      include: [
+        { model: Category, attributes: ['id', 'name'] },
+        { model: Comment, include: [{ model: User, attributes: ['id', 'name'] }] }
+      ]
     }).then(restaurant => {
-      console.log(restaurant)
+      // console.log(restaurant.toJSON())
       return res.render('restaurant', {
-        restaurant: restaurant
+        restaurant: restaurant.toJSON()
       })
     })
   }

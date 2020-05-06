@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
   require('dotenv').config()                      // 使用 dotenv 讀取 .env 檔案
 }
-
+app.locals.moment = require('moment') //let moment function available in pug templates
 
 //middleware
 app.set('view engine', 'pug')
@@ -28,6 +28,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
+
 
 app.listen(port, () => {
   console.log(`App is running on port ${port}!`)
