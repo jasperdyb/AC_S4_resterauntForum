@@ -12,6 +12,15 @@ block body
         if userData.id === user.id
           form(action=`/users/${userData.id}/edit`)
             button.btn.btn-danger(type='submit') Edit
+  br
 
+  h7 
+    strong #{commentedRes.length}已評論餐廳
+  hr
+  .card-group
+    each restaurant in commentedRes
+      .card.mx-1( style= 'max-width:100px')
+        a(href=`/restaurants/${restaurant.id}`)
+          img.card-img-top(src=restaurant.image)
 
 

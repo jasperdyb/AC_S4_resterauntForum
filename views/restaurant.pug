@@ -21,8 +21,7 @@ block body
             |  #{restaurant.address}
     .col-md-8
       p #{restaurant.description}
-    hr
-  br
+  hr
   h3 所有評論：
     each comment in restaurant.Comments
       if user.isAdmin
@@ -40,7 +39,7 @@ block body
       label(for='text') 留下評論：
       textarea#text.form-control(name='text', rows='3')
       input(type='hidden', name='restaurantId', value=restaurant.id)
-      button.btn.btn-primary(type='submit') Submit
+      button.btn.btn-primary.mt-2(type='submit') Submit
   br
   br
   a(href='javascript:history.back()') 回上一頁
