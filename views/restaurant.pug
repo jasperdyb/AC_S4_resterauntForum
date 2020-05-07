@@ -21,7 +21,15 @@ block body
             |  #{restaurant.address}
     .col-md-8
       p #{restaurant.description}
-      a.btn.btn-primary.mt-2(href=`/restaurants/${restaurant.id}/dashboard`) Dashboard
+      .row
+        form(action=`/restaurants/${restaurant.id}/dashboard`)
+          button.btn.btn-primary.mx-1(type='submit') Dashboard
+        if isFavorited
+          form(action=`/favorite/${restaurant.id}?_method=DELETE`, method='POST')
+            button.btn.btn-danger.mx-1(type='submit') 移除最愛
+        else
+          form(action=`/favorite/${restaurant.id}`, method='POST')
+            button.btn.btn-primary.mx-1(type='submit') 加到最愛
   hr
   h3 所有評論：
     each comment in restaurant.Comments
