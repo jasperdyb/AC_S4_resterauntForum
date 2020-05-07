@@ -22,6 +22,7 @@ const restController = {
     Restaurant.findAndCountAll({
       raw: true,
       nest: true,
+      order: [['id', 'ASC']],
       include: Category,
       where: whereQuery,
       offset: offset,
