@@ -21,6 +21,7 @@ block body
             |  #{restaurant.address}
     .col-md-8
       p #{restaurant.description}
+      a.btn.btn-primary.mt-2(href=`/restaurants/${restaurant.id}/dashboard`) Dashboard
   hr
   h3 所有評論：
     each comment in restaurant.Comments
