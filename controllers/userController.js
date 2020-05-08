@@ -197,11 +197,12 @@ const userController = {
       }))
       // 依追蹤者人數排序清單
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('topUser', { users: users })
+      return res.render('topUser', { users: users, loginUserId: req.user.id })
     })
   },
 
   addFollowing: (req, res) => {
+    console.log(req.params.userId, typeof (req.params.userId))
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId

@@ -1,0 +1,59 @@
+extends ./layouts/main.pug
+
+
+block body
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link(href='/restaurants/') 首頁
+    li.nav-item
+      a.nav-link(href='/restaurants/feeds') 最新動態
+    li.nav-item
+      a.nav-link.active(href='/restaurants/top') TOP10 人氣餐廳
+    li.nav-item
+      a.nav-link(href='/users/top') 美食達人
+  br
+  //- ul.nav.nav-pills
+  //-   li.nav-item
+  //-     if categoryId == ""
+  //-       a.nav-link.active(href='?categoryId=') 全部
+  //-     else
+  //-       a.nav-link(href='?categoryId=') 全部
+  //-   each category in categories
+  //-     li.nav-item
+  //-       if category.id == categoryId
+  //-         a.nav-link.active(href=`?categoryId=${category.id}` ) #{category.name}
+  //-       else
+  //-         a.nav-link(href=`?categoryId=${category.id}`) #{category.name}
+  //- br
+  .row
+    .col-md-8.mx-auto
+      .row
+        each restaurant in restaurants
+          .card.mb-3(style='max-width: 540px;')
+            .row.no-gutters
+              .col-md-4
+                img.card-img(src=restaurant.image, alt='Card image cap', width='286px', height='180px')
+              .col-md-8
+                .card-body
+                  h5.card-title  #{restaurant.name}
+                  span.badge.badge-secondary  收藏數: #{restaurant.followerCount}
+                  p.card-text #{restaurant.description}
+                  p.card-text
+                  .row
+                    form(action=`/restaurants/${restaurant.id}`)
+                        button.btn.btn-danger(type='submit') Show
+                    div.mx-1
+                    if restaurant.isFavorited
+                      form(action=`/favorite/${restaurant.id}?_method=DELETE`, method='POST')
+                        button.btn.btn-danger(type='submit') 移除最愛
+                    else
+                      form(action=`/favorite/${restaurant.id}`, method='POST')
+                        button.btn.btn-primary(type='submit') 加到最愛
+                    div.mx-1
+                    if restaurant.isLiked
+                      form(action=`/like/${restaurant.id}?_method=DELETE`, method='POST')
+                        button.btn.btn-danger(type='submit') Unlike
+                    else
+                      form(action=`/like/${restaurant.id}`, method='POST')
+                        button.btn.btn-primary(type='submit') Like
+

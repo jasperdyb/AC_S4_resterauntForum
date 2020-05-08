@@ -23,10 +23,10 @@ block body
         h2 #{user.name}
         span.badge.badge-secondary 追蹤人數：#{user.FollowerCount}
         p
-        if user.isFollowed
-          form(action=`/following/${user.id}?_method=DELETE`, method='POST', style='display: contents;')
-            button.btn.btn-danger(type='submit') 取消追蹤
-        else
-          form(action=`/following/${this.id}`, method='POST', style='display: contents;')
-            button.btn.btn-primary(type='submit') 追蹤
-          p
+        if user.id !== loginUserId
+          if user.isFollowed
+            form(action=`/following/${user.id}?_method=DELETE`, method='POST', style='display: contents;')
+              button.btn.btn-danger(type='submit') 取消追蹤
+          else
+            form(action=`/following/${user.id}`, method='POST', style='display: contents;')
+              button.btn.btn-primary(type='submit') 追蹤
