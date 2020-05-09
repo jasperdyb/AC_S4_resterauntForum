@@ -57,21 +57,28 @@ const userController = {
 
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [{ model: Comment, include: [{ model: Restaurant, attributes: ['id', 'name', 'image'] }] }]
+      include: [
+        { model: Comment, include: [{ model: Restaurant, attributes: ['id', 'name', 'image'] }] },
+        { model: Restaurant, as: 'FavoritedRestaurants', attributes: ['id', 'name', 'image'] },
+        { model: User, as: 'Followers', attributes: ['id', 'name', 'image'] },
+        { model: User, as: 'Followings', attributes: ['id', 'name', 'image'] }
+      ]
     }).then(user => {
       const comments = user.toJSON().Comments
       let commentedResId = []
       let commentedRes = []
-      for (i = 0; i < comments.length; i++) {
-        var restaurant = comments[i].Restaurant
-        if (restaurant) {
-          if (!commentedResId.includes(restaurant.id)) {
-            commentedResId.push(restaurant.id)
-            commentedRes.push(restaurant)
-          }
+
+      comments.forEach(comment => {
+        var restaurant = comment.Restaurant
+        if (restaurant && !commentedResId.includes(restaurant.id)) {
+          commentedResId.push(restaurant.id)
+          commentedRes.push(restaurant)
         }
-      }
-      return res.render('userProfile', { userData: user, commentedRes: commentedRes }) //make difference with res.locals.user
+      })
+      return res.render('userProfile', {
+        userData: user,
+        commentedRes: commentedRes
+      }) //make difference with res.locals.user
     })
   },
 

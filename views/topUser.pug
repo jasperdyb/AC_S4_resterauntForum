@@ -25,7 +25,7 @@ block body
         p
         if user.id !== loginUserId
           if user.isFollowed
-            form(action=`/following/${user.id}?_method=DELETE`, method='POST', style='display: contents;')
+            form(action=`/following/${user.hid}?_method=DELETE`, method='POST', style='display: contents;')
               button.btn.btn-danger(type='submit') 取消追蹤
           else
             form(action=`/following/${user.id}`, method='POST', style='display: contents;')

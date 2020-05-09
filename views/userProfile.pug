@@ -4,7 +4,10 @@ extends ./layouts/main.pug
 block body
   .row
     .col-md-4
-      img.img-responsive.center-block(src=userData.image, style='width: 250px;margin-bottom: 25px;')
+      if userData.image != null
+        img.img-responsive.center-block(src=userData.image, style='width: 250px;margin-bottom: 25px;')
+      else  
+        img.img-responsive.center-block(src='https://image.damanwoo.com/files/styles/rs-medium/public/flickr/3/2315/5820745122_acf40696e7_o.jpg', style='width: 250px;margin-bottom: 25px;')
     .col-md-8
         h4  
           strong #{userData.name}
@@ -14,13 +17,49 @@ block body
             button.btn.btn-danger(type='submit') Edit
   br
 
-  h7 
-    strong #{commentedRes.length}已評論餐廳
-  hr
-  .card-group
-    each restaurant in commentedRes
-      .card.mx-1( style= 'max-width:100px')
-        a(href=`/restaurants/${restaurant.id}`)
-          img.card-img-top(src=restaurant.image)
+  .row
+    .col-md-6
+      h7 
+        strong #{userData.Followings.length} 追蹤者
+      hr
+      .card-group
+        each following in userData.Followings
+          .card.mx-1( style= 'max-width:100px')
+            a(href=`/users/${following.id}`)
+              if following.image !== null
+                img.card-img-top(src=following.image)
+              else
+                img.card-img-top(src='https://image.damanwoo.com/files/styles/rs-medium/public/flickr/3/2315/5820745122_acf40696e7_o.jpg')
+    .col-md-6
+      h7 
+        strong #{userData.Followers.length} 追隨者
+      hr
+      .card-group
+        each follower in userData.Followers
+          .card.mx-1( style= 'max-width:100px')
+            a(href=`/users/${follower.id}`)
+              if follower.image !== null
+                img.card-img-top(src=follower.image)
+              else
+                img.card-img-top(src='https://image.damanwoo.com/files/styles/rs-medium/public/flickr/3/2315/5820745122_acf40696e7_o.jpg')
+  .row
+    .col-md-6
+      h7 
+        strong #{commentedRes.length} 已評論餐廳
+      hr
+      .card-group
+        each restaurant in commentedRes
+          .card.mx-1( style= 'max-width:100px')
+            a(href=`/restaurants/${restaurant.id}`)
+              img.card-img-top(src=restaurant.image)
+    .col-md-6
+      h7 
+        strong #{userData.FavoritedRestaurants.length} 已收藏的餐廳
+      hr
+      .card-group
+        each restaurant in userData.FavoritedRestaurants
+          .card.mx-1( style= 'max-width:100px')
+            a(href=`/restaurants/${restaurant.id}`)
+              img.card-img-top(src=restaurant.image )
 
 
