@@ -140,9 +140,9 @@ const restController = {
         ]
       },
       order: sequelize.literal('favorite_count DESC'),
-      // limit: 10
+      subQuery: false,
+      limit: 10
     }).then(restaurants => {
-      restaurants = restaurants.slice(0, 10)
       restaurants = restaurants.map(restaurant => ({
         ...restaurant.dataValues,
         description: restaurant.description.substring(0, 50),
