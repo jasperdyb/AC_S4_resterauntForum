@@ -142,14 +142,13 @@ const restController = {
       order: sequelize.literal('favorite_count DESC'),
       // limit: 10
     }).then(restaurants => {
+      restaurants = restaurants.slice(0, 10)
       restaurants = restaurants.map(restaurant => ({
         ...restaurant.dataValues,
         description: restaurant.description.substring(0, 50),
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id),
         isLiked: req.user.LikedRestaurants.map(d => d.id).includes(restaurant.id)
       }))
-
-      restaurants = restaurants.slice(0, 10)
       return res.render('topRestaurants', { restaurants: restaurants })
     })
   }
