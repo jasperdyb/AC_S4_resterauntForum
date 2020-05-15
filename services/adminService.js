@@ -70,13 +70,13 @@ const adminService = {
 
   },
 
-  getRestaurant: (req, res) => {
+  getRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, {
       raw: true,
       nest: true,
       include: [{ model: Category, attributes: ['name'] }]
     }).then(restaurant => {
-      return res.render('admin/restaurant', { restaurant: restaurant })
+      callback({ restaurant: restaurant })
     })
   },
 
