@@ -29,10 +29,9 @@ const adminService = {
     })
   },
 
-  postRestaurant: (req, res) => {
+  postRestaurant: (req, res, callback) => {
     if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
+      return callback({ status: 'error', message: "name didn't exist" })
     }
 
     const { file } = req
@@ -48,8 +47,7 @@ const adminService = {
           CategoryId: req.body.categoryId,
           image: file ? img.data.link : null,
         }).then((restaurant) => {
-          req.flash('success_messages', 'restaurant was successfully created')
-          return res.redirect('/admin/restaurants')
+          callback({ status: 'success', message: 'restaurant was successfully created' })
         })
       })
     }
@@ -63,8 +61,7 @@ const adminService = {
         CategoryId: req.body.categoryId
       })
         .then((restaurant) => {
-          req.flash('success_messages', 'restaurant was successfully created')
-          res.redirect('/admin/restaurants')
+          callback({ status: 'success', message: 'restaurant was successfully created' })
         })
     }
 
@@ -142,12 +139,12 @@ const adminService = {
     }
   },
 
-  deleteRestaurant: (req, res) => {
+  deleteRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id)
       .then((restaurant) => {
         restaurant.destroy()
           .then((restaurant) => {
-            res.redirect('/admin/restaurants')
+            callback({ status: 'success', message: '' })
           })
       })
   },

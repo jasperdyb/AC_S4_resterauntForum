@@ -16,6 +16,7 @@ app.locals.moment = require('moment') //let moment function available in pug tem
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(methodOverride('_method'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
