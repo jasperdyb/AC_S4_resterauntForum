@@ -39,8 +39,8 @@ router.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
 router.get('/restaurants', authenticated, restController.getRestaurants)
 router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
-// router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 // router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
 // 連到 /admin 頁面就轉到 /admin/restaurants
 router.get('/admin', authenticated, authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))

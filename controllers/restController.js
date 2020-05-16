@@ -18,26 +18,8 @@ const restController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, {
-      // raw: true,   //raw didn't work with including hasMany models,it'll only shows the first query
-      // nest: true,
-      include: [
-        { model: Category, attributes: ['id', 'name'] },
-        { model: User, as: 'FavoritedUsers' },
-        { model: User, as: 'LikedUsers' },
-        { model: Comment, include: [{ model: User, attributes: ['id', 'name'] }] }
-      ]
-    }).then(restaurant => {
-      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
-      const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
-      restaurant.update({
-        viewCount: restaurant.viewCount + 1
-      })
-      return res.render('restaurant', {
-        restaurant: restaurant.toJSON(),
-        isFavorited: isFavorited,
-        isLiked: isLiked,
-      })
+    restService.getRestaurant(req, res, (data) => {
+      return res.render('restaurant', data)
     })
   },
 

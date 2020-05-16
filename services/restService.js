@@ -62,7 +62,7 @@ const restService = {
       })
   },
 
-  getRestaurant: (req, res) => {
+  getRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, {
       // raw: true,   //raw didn't work with including hasMany models,it'll only shows the first query
       // nest: true,
@@ -78,7 +78,7 @@ const restService = {
       restaurant.update({
         viewCount: restaurant.viewCount + 1
       })
-      return res.render('restaurant', {
+      return callback({
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited,
         isLiked: isLiked,
