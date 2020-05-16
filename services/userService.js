@@ -37,17 +37,18 @@ const userService = {
     })
   },
 
-  editUser: (req, res) => {
+  editUser: (req, res, callback) => {
     //prevent edit from other users
     if (req.params.id !== String(res.locals.user.id)) {
-      return res.redirect(`/users/${res.locals.user.id}`)
+      return callback({ status: 'error' })
     }
 
     return User.findByPk(req.params.id, {
       raw: true,
       nest: true
     }).then(user => {
-      return res.render('userEdit', { userData: user }) //make difference with req.locals.user
+
+      callback({ status: 'success', userData: user }) //make difference with req.locals.user
     })
   },
 

@@ -62,6 +62,13 @@ let userController = {
     userService.getUser(req, res, (data) => {
       return res.json(data)
     })
+  },
+
+  editUser: (req, res) => {
+    res.locals.user = req.user
+    userService.editUser(req, res, (data) => {
+      return res.json(data)
+    })
   }
 }
 
