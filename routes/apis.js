@@ -69,15 +69,15 @@ router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 //favorite routes
-// router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
-// router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 
 //like routes
-// router.post('/like/:restaurantId', authenticated, userController.addLike)
-// router.delete('/like/:restaurantId', authenticated, userController.removeLike)
+router.post('/like/:restaurantId', authenticated, userController.addLike)
+router.delete('/like/:restaurantId', authenticated, userController.removeLike)
 
 //following routes
-// router.post('/following/:userId', authenticated, userController.addFollowing)
-// router.delete('/following/:userId', authenticated, userController.removeFollowing)
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
 
 module.exports = router

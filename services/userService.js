@@ -93,17 +93,17 @@ const userService = {
     }
   },
 
-  addFavorite: (req, res) => {
+  addFavorite: (req, res, callback) => {
     return Favorite.create({
       UserId: req.user.id,
       RestaurantId: req.params.restaurantId
     })
-      .then((restaurant) => {
-        return res.redirect('back')
+      .then((favorite) => {
+        return callback({ status: "success", message: "", favorite: favorite })
       })
   },
 
-  removeFavorite: (req, res) => {
+  removeFavorite: (req, res, callback) => {
     return Favorite.findOne({
       where: {
         UserId: req.user.id,
@@ -112,23 +112,23 @@ const userService = {
     })
       .then((favorite) => {
         favorite.destroy()
-          .then((restaurant) => {
-            return res.redirect('back')
+          .then((favorite) => {
+            return callback({ status: "success", message: "", favorite: favorite })
           })
       })
   },
 
-  addLike: (req, res) => {
+  addLike: (req, res, callback) => {
     return Like.create({
       UserId: req.user.id,
       RestaurantId: req.params.restaurantId
     })
-      .then((restaurant) => {
-        return res.redirect('back')
+      .then((like) => {
+        return callback({ status: "success", message: "", like: like })
       })
   },
 
-  removeLike: (req, res) => {
+  removeLike: (req, res, callback) => {
     return Like.findOne({
       where: {
         UserId: req.user.id,
@@ -137,8 +137,8 @@ const userService = {
     })
       .then((like) => {
         like.destroy()
-          .then((restaurant) => {
-            return res.redirect('back')
+          .then((like) => {
+            return callback({ status: "success", message: "", like: like })
           })
       })
   },
@@ -164,18 +164,18 @@ const userService = {
     })
   },
 
-  addFollowing: (req, res) => {
+  addFollowing: (req, res, callback) => {
     console.log(req.params.userId, typeof (req.params.userId))
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
     })
       .then((followship) => {
-        return res.redirect('back')
+        return callback({ status: "success", message: "", followship: followship })
       })
   },
 
-  removeFollowing: (req, res) => {
+  removeFollowing: (req, res, callback) => {
     return Followship.findOne({
       where: {
         followerId: req.user.id,
@@ -185,7 +185,7 @@ const userService = {
       .then((followship) => {
         followship.destroy()
           .then((followship) => {
-            return res.redirect('back')
+            return callback({ status: "success", message: "", followship: followship })
           })
       })
   }
