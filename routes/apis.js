@@ -24,7 +24,7 @@ router.post('/signup', userController.signUp)
 // router.get('/signin', userController.signInPage)
 router.post('/signin', userController.signIn)// JWT signin
 // router.get('/logout', userController.logout)
-// router.get('/users/top', authenticated, userController.getTopUser)
+router.get('/users/top', authenticated, userController.getTopUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
