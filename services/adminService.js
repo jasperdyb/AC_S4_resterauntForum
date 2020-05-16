@@ -92,10 +92,9 @@ const adminService = {
     })
   },
 
-  putRestaurant: (req, res) => {
+  putRestaurant: (req, res, callback) => {
     if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
+      return callback({ status: 'error', message: "name didn't exist" })
     }
 
     const { file } = req
@@ -114,8 +113,7 @@ const adminService = {
               image: file ? img.data.link : restaurant.image,
             })
               .then((restaurant) => {
-                req.flash('success_messages', 'restaurant was successfully to update')
-                res.redirect('/admin/restaurants')
+                callback({ status: 'success', message: 'restaurant was successfully updated' })
               })
           })
       })
@@ -132,8 +130,7 @@ const adminService = {
             CategoryId: req.body.categoryId
           })
             .then((restaurant) => {
-              req.flash('success_messages', 'restaurant was successfully to update')
-              res.redirect('/admin/restaurants')
+              callback({ status: 'success', message: 'restaurant was successfully updated' })
             })
         })
     }
