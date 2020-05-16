@@ -77,7 +77,7 @@ const adminService = {
     })
   },
 
-  editRestaurant: (req, res) => {
+  editRestaurant: (req, res, callback) => {
     Category.findAll({
       raw: true,
       nest: true
@@ -87,7 +87,7 @@ const adminService = {
         nest: true,
         include: [{ model: Category, attributes: ['name'] }]
       }).then(restaurant => {
-        return res.render('admin/create', { restaurant: restaurant, categories: categories })
+        return callback({ restaurant: restaurant, categories: categories })
       })
     })
   },

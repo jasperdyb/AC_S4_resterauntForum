@@ -39,17 +39,8 @@ const adminController = {
   },
 
   editRestaurant: (req, res) => {
-    Category.findAll({
-      raw: true,
-      nest: true
-    }).then(categories => {
-      return Restaurant.findByPk(req.params.id, {
-        raw: true,
-        nest: true,
-        include: [{ model: Category, attributes: ['name'] }]
-      }).then(restaurant => {
-        return res.render('admin/create', { restaurant: restaurant, categories: categories })
-      })
+    adminService.editRestaurant(req, res, (data) => {
+      return res.render('admin/create', data)
     })
   },
 
