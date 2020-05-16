@@ -69,7 +69,14 @@ let userController = {
     userService.editUser(req, res, (data) => {
       return res.json(data)
     })
-  }
+  },
+
+  putUser: (req, res) => {
+    res.locals.user = req.user
+    userService.putUser(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

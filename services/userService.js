@@ -40,7 +40,7 @@ const userService = {
   editUser: (req, res, callback) => {
     //prevent edit from other users
     if (req.params.id !== String(res.locals.user.id)) {
-      return callback({ status: 'error' })
+      return callback({ status: 'error', message: 'user is not the account owner' })
     }
 
     return User.findByPk(req.params.id, {
@@ -52,10 +52,10 @@ const userService = {
     })
   },
 
-  putUser: (req, res) => {
+  putUser: (req, res, callback) => {
     //prevent edit from other users
     if (req.params.id !== String(res.locals.user.id)) {
-      return res.redirect(`/users/${res.locals.user.id}`)
+      return callback({ status: 'error', message: 'user is not the account owner' })
     }
 
     if (!req.body.name) {
@@ -73,8 +73,8 @@ const userService = {
               image: file ? img.data.link : user.image,
             })
               .then((user) => {
-                req.flash('success_messages', 'user was successfully to update')
-                res.redirect(`/users/${user.id}`)
+                // req.flash('success_messages', 'user was successfully to update')
+                callback({ status: 'success', message: 'user was successfully updated' })
               })
           })
       })
@@ -86,8 +86,8 @@ const userService = {
             name: req.body.name
           })
             .then((user) => {
-              req.flash('success_messages', 'user was successfully to update')
-              res.redirect(`/users/${user.id}`)
+              // req.flash('success_messages', 'user was successfully to update')
+              callback({ status: 'success', message: 'user was successfully updated' })
             })
         })
     }
