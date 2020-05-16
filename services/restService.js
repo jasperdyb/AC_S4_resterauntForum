@@ -109,14 +109,14 @@ const restService = {
     })
   },
 
-  getDashboard: (req, res) => {
+  getDashboard: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, {
       include: [
         { model: Category, attributes: ['id', 'name'] },
         { model: Comment, attributes: ['id'] }
       ]
     }).then(restaurant => {
-      return res.render('dashboard', {
+      return callback({
         restaurant: restaurant.toJSON()
       })
     })

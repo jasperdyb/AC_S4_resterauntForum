@@ -16,6 +16,11 @@ const restController = {
       return res.json(data)
     })
   },
+  getDashboard: (req, res) => {
+    restService.getDashboard(req, res, (data) => {
+      return res.json(data)
+    })
+  },
   getTopRestaurants: (req, res) => {
     restService.getTopRestaurants(req, res, (data) => {
       return res.json(data)
