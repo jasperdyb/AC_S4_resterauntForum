@@ -155,18 +155,18 @@ const adminService = {
     })
   },
 
-  putUsers: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then((user) => {
-        user.update({
-          isAdmin: !user.isAdmin
-        })
-          .then((user) => {
-            req.flash('success_messages', 'Administration updated!')
-            res.send() //respond success to jquery.put()
-          })
-      })
-  }
+  // putUsers: (req, res) => {
+  //   return User.findByPk(req.params.id)
+  //     .then((user) => {
+  //       user.update({
+  //         isAdmin: !user.isAdmin
+  //       })
+  //         .then((user) => {
+  //           req.flash('success_messages', 'Administration updated!')
+  //           res.send() //respond success to jquery.put()
+  //         })
+  //     })
+  // }
 }
 
 module.exports = adminService

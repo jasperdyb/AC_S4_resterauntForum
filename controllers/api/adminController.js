@@ -1,6 +1,7 @@
 const db = require('../../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const User = db.User
 const adminService = require('../../services/adminService.js')
 
 const adminController = {
@@ -51,5 +52,17 @@ const adminController = {
       return res.json(data)
     })
   },
+
+  putUsers: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        user.update({
+          isAdmin: !user.isAdmin
+        })
+          .then((user) => {
+            return res.json({ status: 'success', message: `user id ${user.id}\'s administration updated!` })
+          })
+      })
+  }
 }
 module.exports = adminController
