@@ -53,7 +53,7 @@ router.put('/admin/restaurants/:id', authenticated, authenticatedAdmin, upload.s
 router.delete('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.deleteRestaurant)
 
 
-// router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
 // router.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
 
 //Category routes

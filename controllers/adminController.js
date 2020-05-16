@@ -64,11 +64,8 @@ const adminController = {
   },
 
   getUsers: (req, res) => {
-    return User.findAll({
-      order: [['id', 'ASC']],
-      raw: true
-    }).then(users => {
-      return res.render('admin/users', { users: users, currentUserEmail: req.user.email })
+    adminService.getUsers(req, res, (data) => {
+      return res.render('admin/users', data)
     })
   },
 

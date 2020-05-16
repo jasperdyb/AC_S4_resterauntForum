@@ -146,12 +146,12 @@ const adminService = {
       })
   },
 
-  getUsers: (req, res) => {
+  getUsers: (req, res, callback) => {
     return User.findAll({
       order: [['id', 'ASC']],
       raw: true
     }).then(users => {
-      return res.render('admin/users', { users: users, currentUserEmail: req.user.email })
+      return callback({ users: users, currentUserEmail: req.user.email })
     })
   },
 
