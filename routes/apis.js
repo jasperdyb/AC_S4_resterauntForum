@@ -38,7 +38,7 @@ router.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
 // 在 /restaurants 底下則交給 restController.getRestaurants 來處理
 router.get('/restaurants', authenticated, restController.getRestaurants)
 router.get('/restaurants/feeds', authenticated, restController.getFeeds)
-// router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 // router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 // router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 

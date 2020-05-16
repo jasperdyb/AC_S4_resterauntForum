@@ -122,7 +122,7 @@ const restService = {
     })
   },
 
-  getTopRestaurants: (req, res) => {
+  getTopRestaurants: (req, res, callback) => {
 
     return Restaurant.findAll({
       // subquery: false,
@@ -149,7 +149,7 @@ const restService = {
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id),
         isLiked: req.user.LikedRestaurants.map(d => d.id).includes(restaurant.id)
       }))
-      return res.render('topRestaurants', { restaurants: restaurants })
+      return callback({ restaurants: restaurants })
     })
   }
 }

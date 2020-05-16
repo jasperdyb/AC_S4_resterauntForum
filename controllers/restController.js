@@ -61,33 +61,8 @@ const restController = {
   },
 
   getTopRestaurants: (req, res) => {
-
-    return Restaurant.findAll({
-      // subquery: false,
-      include: [
-        {
-          model: User,
-          as: 'FavoritedUsers',
-          attributes: []
-        },
-      ],
-      group: ['Restaurant.id'],
-      attributes: {
-        include: [
-          [sequelize.fn('COUNT', sequelize.col('FavoritedUsers.id')), 'favorite_count'],
-        ]
-      },
-      order: sequelize.literal('favorite_count DESC'),
-      subQuery: false,
-      limit: 10
-    }).then(restaurants => {
-      restaurants = restaurants.map(restaurant => ({
-        ...restaurant.dataValues,
-        description: restaurant.description.substring(0, 50),
-        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id),
-        isLiked: req.user.LikedRestaurants.map(d => d.id).includes(restaurant.id)
-      }))
-      return res.render('topRestaurants', { restaurants: restaurants })
+    restService.getTopRestaurants(req, res, (data) => {
+      return res.render('topRestaurants', data)
     })
   }
 }
