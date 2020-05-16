@@ -18,12 +18,12 @@ const adminService = {
     })
   },
 
-  createRestaurant: (req, res) => {
+  createRestaurant: (req, res, callback) => {
     Category.findAll({
       raw: true,
       nest: true
     }).then(categories => {
-      return res.render('admin/create', {
+      return callback({
         categories: categories
       })
     })

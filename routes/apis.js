@@ -45,7 +45,7 @@ router.get('/restaurants/:id/dashboard', authenticated, restController.getDashbo
 // 連到 /admin 頁面就轉到 /admin/restaurants
 router.get('/admin', authenticated, authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
-// router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+router.get('/admin/restaurants/create', authenticated, authenticatedAdmin, adminController.createRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
 router.get('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
 // router.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
