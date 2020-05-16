@@ -7,6 +7,7 @@ const passport = require('../config/passport')
 const adminController = require('../controllers/api/adminController.js')
 const categoryController = require('../controllers/api/categoryController.js')
 const userController = require('../controllers/api/userController.js')
+const restController = require('../controllers/api/restController.js')
 
 const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
@@ -35,14 +36,14 @@ router.put('/users/:id', authenticated, upload.single('image'), userController.p
 router.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
 
 // 在 /restaurants 底下則交給 restController.getRestaurants 來處理
-// router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants', authenticated, restController.getRestaurants)
 // router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 // router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 // router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 // router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 
 // 連到 /admin 頁面就轉到 /admin/restaurants
-router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+router.get('/admin', authenticated, authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
 // router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurant)

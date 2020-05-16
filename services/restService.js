@@ -6,15 +6,60 @@ const Comment = db.Comment
 const User = db.User
 const Favorite = db.Favorite
 const pageLimit = 12
-const restService = require('../services/restService.js')
 
-const restController = {
-  getRestaurants: (req, res) => {
+const restService = {
+  getRestaurants: (req, res, callback) => {
+    let offset = 0
+    let whereQuery = {}
+    let categoryId = ''
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
 
-    restService.getRestaurants(req, res, (data) => {
-      return res.render('restaurants', data)
+    if (req.query.categoryId) {
+      categoryId = Number(req.query.categoryId)
+      whereQuery['CategoryId'] = categoryId
+    }
+
+    Restaurant.findAndCountAll({
+      raw: true,
+      nest: true,
+      order: [['id', 'ASC']],
+      include: Category,
+      where: whereQuery,
+      offset: offset,
+      limit: pageLimit
     })
+      .then(result => {
+        let currentPage = Number(req.query.page) || 1
+        let pages = Math.ceil(result.count / pageLimit)
+        let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+        let prev = currentPage - 1 < 1 ? 1 : currentPage - 1
+        let next = currentPage + 1 > pages ? pages : currentPage + 1
 
+        restaurants = result.rows.map(r => ({
+          ...r,
+          description: r.description.substring(0, 50),
+          categoryName: r.Category.name,
+          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+          isLiked: req.user.LikedRestaurants.map(d => d.id).includes(r.id)
+        }))
+
+        Category.findAll({
+          raw: true,
+          nest: true
+        }).then(categories => { // 取出 categories 
+          return callback({
+            restaurants: restaurants,
+            categories: categories,
+            categoryId: categoryId,
+            currentPage: currentPage,
+            totalPage: totalPage,
+            prev: prev,
+            next: next
+          })
+        })
+      })
   },
 
   getRestaurant: (req, res) => {
@@ -109,4 +154,4 @@ const restController = {
   }
 }
 
-module.exports = restController
+module.exports = restService
