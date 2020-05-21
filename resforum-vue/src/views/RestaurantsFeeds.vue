@@ -10,13 +10,14 @@
           h3 最新餐廳
           RestaurantsFeedsNewest( :restaurants="restaurants")
         .col-md-6
-          // 最新評論 NewestComments
+          RestaurantsFeedsComments(:comments="comments")
           h3 最新評論
 </template>
 
 <script>
 import RestaurantsNavTabs from "./../components/RestaurantsNavTabs";
 import RestaurantsFeedsNewest from "./../components/RestaurantsFeedsNewest";
+import RestaurantsFeedsComments from "./../components/RestaurantsFeedsComments";
 
 const dummy = {
   restaurants: [
@@ -430,7 +431,8 @@ const dummy = {
 export default {
   components: {
     RestaurantsNavTabs,
-    RestaurantsFeedsNewest
+    RestaurantsFeedsNewest,
+    RestaurantsFeedsComments
   },
   data() {
     return {

@@ -1,14 +1,15 @@
 <template lang="pug">
   .card
     .card-header
-      | 最新餐廳
+      | 最新評論
     .card-body
-      div(v-for="restaurant in restaurants" :key="restaurant.id")
+      div(v-for="comment in comments" :key="comment.id")
         h4
-          a(href="#") {{restaurant.name}}
-          small() {{ restaurant.Category.name ? restaurant.Category.name : '未分類'}}
-        p {{restaurant.description}}
-        |              {{ restaurant.createdAt | fromNow }}
+          a(href=`#`) {{comment.Restaurant.name? comment.Restaurant.name:"餐廳不存在"}}
+        p {{comment.text}}
+        |             by 
+        a(href=`#`) {{comment.User.name ? comment.User.name :"用戶不存在"}}
+        |              {{comment.createdAt | fromNow}}     
         hr
 </template>
 
@@ -27,7 +28,7 @@ export default {
     }
   },
   props: {
-    restaurants: {
+    comments: {
       type: Array,
       required: true
     }
