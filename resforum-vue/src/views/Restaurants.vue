@@ -2,6 +2,7 @@
   .container.py-5
     RestaurantsNavTabs
     navtabs
+      RestaurantsNavPills(:categories ='categories')
       .row
         RestaurantsCard(
           v-for="restaurant in restaurants"
@@ -15,6 +16,8 @@
 <script>
 import RestaurantsNavTabs from "./../components/RestaurantsNavTabs";
 import RestaurantsCard from "../components/RestaurantsCard";
+import RestaurantsNavPills from "../components/RestaurantsNavPills";
+
 const dummy = {
   restaurants: [
     {
@@ -355,6 +358,7 @@ export default {
   components: {
     RestaurantsNavTabs,
     RestaurantsCard,
+    RestaurantsNavPills
   },
   data() {
     return {
