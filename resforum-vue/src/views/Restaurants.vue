@@ -9,7 +9,14 @@
           :key="restaurant.id"
           :initial-restaurant="restaurant"
         )
-        // 分頁標籤 RestaurantPagination
+        RestaurantsPagination(
+          v-if="totalPage.length > 1"
+          :current-page="currentPage"
+          :total-page="totalPage"
+          :category-id="categoryId"
+          :previous-page="previousPage"
+          :next-page="nextPage"
+        )
 </template>
 
 
@@ -17,6 +24,7 @@
 import RestaurantsNavTabs from "./../components/RestaurantsNavTabs";
 import RestaurantsCard from "../components/RestaurantsCard";
 import RestaurantsNavPills from "../components/RestaurantsNavPills";
+import RestaurantsPagination from "../components/RestaurantsPagination";
 
 const dummy = {
   restaurants: [
@@ -358,7 +366,8 @@ export default {
   components: {
     RestaurantsNavTabs,
     RestaurantsCard,
-    RestaurantsNavPills
+    RestaurantsNavPills,
+    RestaurantsPagination
   },
   data() {
     return {
@@ -367,8 +376,8 @@ export default {
       categoryId: undefined,
       currentPage: 1,
       totalPage: undefined,
-      prev: undefined,
-      next: undefined
+      previousPage: undefined,
+      nextPage: undefined
     };
   },
   created() {
@@ -381,8 +390,8 @@ export default {
       this.categoryId = dummy.categoryId;
       this.currentPage = dummy.currentPage;
       this.totalPage = dummy.totalPage;
-      this.prev = dummy.prev;
-      this.next = dummy.next;
+      this.previousPage = dummy.prev;
+      this.nextPage = dummy.next;
     }
   }
 };
