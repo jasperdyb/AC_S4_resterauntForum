@@ -22,7 +22,6 @@
 import { fromNowFilter } from "../utils/mixins";
 
 const dummyUser = {
-  mixins: [fromNowFilter],
   currentUser: {
     id: 1,
     name: "管理者",

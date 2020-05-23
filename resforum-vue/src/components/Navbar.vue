@@ -11,7 +11,7 @@
           | 管理員後台
         // is user is login
         template(v-if="currentUser.isAdmin")
-          router-link.text-white.mr-3(to='#')
+          router-link.text-white.mr-3(:to="{name: 'user', params: { id: currentUser.id }}")
             | 使用者 您好
           button.btn.btn-sm.btn-outline-success.my-2.my-sm-0(type='button')
             | 登出
