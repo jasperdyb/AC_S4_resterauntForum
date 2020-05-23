@@ -1,22 +1,21 @@
 <template lang="pug">
   .container.py-5
     RestaurantsNavTabs
-    navtabs
-      RestaurantsNavPills(:categories ='categories')
-      .row
-        RestaurantsCard(
-          v-for="restaurant in restaurants"
-          :key="restaurant.id"
-          :initial-restaurant="restaurant"
-        )
-        RestaurantsPagination(
-          v-if="totalPage.length > 1"
-          :current-page="currentPage"
-          :total-page="totalPage"
-          :category-id="categoryId"
-          :previous-page="previousPage"
-          :next-page="nextPage"
-        )
+    RestaurantsNavPills(:categories ='categories')
+    .row
+      RestaurantsCard(
+        v-for="restaurant in restaurants"
+        :key="restaurant.id"
+        :initial-restaurant="restaurant"
+      )
+      RestaurantsPagination(
+        v-if="totalPage.length > 1"
+        :current-page="currentPage"
+        :total-page="totalPage"
+        :category-id="categoryId"
+        :previous-page="previousPage"
+        :next-page="nextPage"
+      )
 </template>
 
 
