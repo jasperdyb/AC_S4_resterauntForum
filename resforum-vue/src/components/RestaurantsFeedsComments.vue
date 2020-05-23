@@ -5,7 +5,7 @@
     .card-body
       div(v-for="comment in comments" :key="comment.id")
         h4
-          a(href=`#`) {{comment.Restaurant.name? comment.Restaurant.name:"餐廳不存在"}}
+          router-link(:to="{ name: 'restaurant', params: {id: comment.Restaurant.id}}") {{comment.Restaurant.name? comment.Restaurant.name:"餐廳不存在"}}
         p {{comment.text}}
         |             by 
         a(href=`#`) {{comment.User.name ? comment.User.name :"用戶不存在"}}
@@ -15,18 +15,10 @@
 
 
 <script>
-import moment from "moment";
+import { fromNowFilter } from "../utils/mixins";
 
 export default {
-  filters: {
-    fromNow(datetime) {
-      if (!datetime) {
-        return "-";
-      }
-      // 使用 moment 提供的 fromNow 方法
-      return moment(datetime).fromNow();
-    }
-  },
+  mixins: [fromNowFilter],
   props: {
     comments: {
       type: Array,

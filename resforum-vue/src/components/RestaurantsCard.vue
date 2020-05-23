@@ -4,7 +4,7 @@
       img.card-img-top( :src="restaurant.image", alt='Card image cap', width='286px', height='180px')
       .card-body
         p.card-text.title-wrap
-          a(href='#')
+          router-link(:to="{ name: 'restaurant', params: { id: restaurant.id }}")
             | {{restaurant.name}}
         span.badge.badge-secondary {{restaurant.Category.name}}
         p.card-text.text-truncate
