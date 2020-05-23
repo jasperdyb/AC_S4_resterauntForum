@@ -18,7 +18,7 @@
             |             {{restaurant.address}}
     .col-lg-8
       p {{ restaurant.description }}
-      a.btn.btn-primary.btn-border.mr-2(href='#') Dashboard
+      router-link.btn.btn-primary.btn-border.mr-2(:to="{name:'restaurant-dashboard' , params: { id: restaurant.id }}" ) Dashboard
       button.btn.btn-danger.btn-border.mr-2(type='button')
         | 移除最愛
       button.btn.btn-primary.btn-border.mr-2(type='button')
